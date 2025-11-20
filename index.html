@@ -6,98 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NaviHive</title>
     
-    <!-- 🎨 WebStack 风格美化 CSS -->
-    <style id="webstack-style">
-      /* 1. 全局背景：使用更干净的高级灰/风景图 */
+    <!-- 🍎 纯净版苹果风格 CSS (无搜索栏) -->
+    <style id="apple-pure-style">
+      /* 1. 全局背景：锁定壁纸 */
       :root, html, body {
         background: transparent !important;
         min-height: 100vh !important;
-        scroll-behavior: smooth;
       }
       
-      /* 这里选了一张类似 WebStack 默认风格的干净壁纸（也可以换成纯色） */
       body {
-        background-image: url('https://images.unsplash.com/photo-1497250681960-ef04efc2904c?q=80&w=2070&auto=format&fit=crop') !important;
+        /* 这里换回了那张经典的苹果风壁纸 */
+        background-image: url('https://images.unsplash.com/photo-1621609764095-64324009c6e1?q=80&w=2066&auto=format&fit=crop') !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif !important;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif !important;
+        /* 移除顶部留白，界面更紧凑 */
+        padding-top: 20px !important; 
       }
 
-      /* 2. 核心：WebStack 风格卡片 (乳白色、微透、扎实) */
-      /* 覆盖所有卡片类元素 */
-      a[class*="bg-white"], 
-      div[class*="bg-white"], 
-      div[class*="card"] {
-        /* WebStack 特点：背景更实一点，不是完全透明 */
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        
-        /* 边框更细致 */
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        border-radius: 12px !important; /* 圆角稍微小一点，更商务 */
-        
-        /* 经典的 WebStack 阴影：轻微向下 */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 10px 15px rgba(0, 0, 0, 0.03) !important;
-        
-        /* 移除默认的模糊，让字更清晰 */
-        backdrop-filter: none !important; 
-        -webkit-backdrop-filter: none !important;
-        
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-      }
-
-      /* 3. 鼠标悬停：上浮 + 底部投影 */
-      a[class*="bg-white"]:hover {
-        transform: translateY(-5px) !important;
-        background-color: #ffffff !important; /* 悬停变纯白 */
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-        border-color: #ffffff !important;
-        z-index: 10;
-      }
-
-      /* 4. 侧边栏/菜单栏美化 */
-      /* 选中侧边栏容器 */
-      aside, nav, div[class*="fixed"] {
-        background-color: rgba(255, 255, 255, 0.85) !important;
+      /* 2. 核心美化：暴力覆盖所有卡片 */
+      /* 只要是白色背景的容器，统统变成毛玻璃 */
+      [class*="bg-white"], 
+      [class*="bg-gray-50"], 
+      [class*="bg-zinc-50"],
+      [class*="bg-slate-50"],
+      .card {
+        background-color: rgba(255, 255, 255, 0.65) !important;
         backdrop-filter: blur(20px) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.5) !important;
-      }
-      /* 选中当前激活的菜单项 */
-      .active, [aria-current="page"] {
-        background-color: #f3f4f6 !important; /* 浅灰背景 */
-        color: #2563eb !important; /* 蓝色文字 */
-        border-radius: 8px !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-radius: 24px !important; /* 经典的苹果大圆角 */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+        transition: all 0.3s ease !important;
       }
 
-      /* 5. 图片优化 */
+      /* 3. 鼠标悬停交互 */
+      /* 针对卡片（通常是 a 标签或 div） */
+      a[class*="bg-white"]:hover,
+      div[class*="bg-white"]:hover {
+        transform: translateY(-4px) scale(1.01) !important;
+        background-color: rgba(255, 255, 255, 0.85) !important;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12) !important;
+        z-index: 50;
+      }
+
+      /* 4. 图片圆角 */
       img {
-        border-radius: 8px !important; /* 图片圆角统一 */
-      }
-      
-      /* 6. 文字优化 */
-      h1, h2, h3, h4 {
-        color: #1f2937 !important; /* 深灰标题 */
-        font-weight: 600 !important;
-      }
-      p, span {
-        color: #4b5563 !important; /* 次级灰 */
+        border-radius: 14px !important;
       }
 
-      /* 7. 暗黑模式 WebStack 风格 */
+      /* 5. 侧边栏/菜单栏特殊处理 (让它更透一点) */
+      aside, nav {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+      }
+
+      /* 6. 暗黑模式适配 */
       @media (prefers-color-scheme: dark) {
-        a[class*="bg-white"], div[class*="bg-white"] {
-          background-color: rgba(30, 30, 30, 0.9) !important;
-          border-color: rgba(255, 255, 255, 0.05) !important;
-          color: #e5e7eb !important;
+        [class*="bg-white"], [class*="bg-gray-"], aside, nav {
+          background-color: rgba(30, 30, 30, 0.6) !important;
+          border-color: rgba(255,255,255,0.1) !important;
+          color: #fff !important;
         }
-        a[class*="bg-white"]:hover {
-          background-color: rgba(45, 45, 45, 1) !important;
+        [class*="bg-white"]:hover {
+          background-color: rgba(50, 50, 50, 0.8) !important;
         }
-        aside, nav {
-          background-color: rgba(20, 20, 20, 0.9) !important;
-          border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
-        }
-        h1, h2, h3, p, span { color: #e5e7eb !important; }
+        /* 强制文字颜色 */
+        h1, h2, h3, span, p, a { color: #fff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
       }
     </style>
   </head>
@@ -106,22 +82,22 @@
     
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- 🧹 清洁工脚本：依然需要它来撕掉原有的灰色背景 -->
+    <!-- 🔥 核心脚本：保留这个清洁工，它是美化生效的关键 🔥 -->
     <script>
+      // 定时清理 React 生成的灰色背景
       const cleaner = setInterval(() => {
-        // 扩大搜索范围，确保干掉所有遮挡背景的元素
         const masks = document.querySelectorAll('.min-h-screen, .bg-gray-50, .bg-zinc-50, body > div:first-child, main');
         
         masks.forEach(el => {
           const style = window.getComputedStyle(el);
-          // 如果发现元素有背景色且不是透明的
+          // 如果背景不是透明的，强制变透明，让壁纸透出来
           if (style.backgroundColor !== 'rgba(0, 0, 0, 0)' && style.backgroundColor !== 'transparent') {
             el.style.setProperty('background-color', 'transparent', 'important');
             el.style.setProperty('background-image', 'none', 'important');
             el.style.setProperty('box-shadow', 'none', 'important');
           }
         });
-      }, 200); // 每0.2秒检查一次
+      }, 200);
     </script>
   </body>
 </html>
