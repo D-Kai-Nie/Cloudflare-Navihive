@@ -1,103 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NaviHive</title>
-    
-    <!-- 🍎 纯净版苹果风格 CSS (无搜索栏) -->
-    <style id="apple-pure-style">
-      /* 1. 全局背景：锁定壁纸 */
-      :root, html, body {
-        background: transparent !important;
-        min-height: 100vh !important;
-      }
-      
-      body {
-        /* 这里换回了那张经典的苹果风壁纸 */
-        background-image: url('https://images.unsplash.com/photo-1621609764095-64324009c6e1?q=80&w=2066&auto=format&fit=crop') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-attachment: fixed !important;
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif !important;
-        /* 移除顶部留白，界面更紧凑 */
-        padding-top: 20px !important; 
-      }
-
-      /* 2. 核心美化：暴力覆盖所有卡片 */
-      /* 只要是白色背景的容器，统统变成毛玻璃 */
-      [class*="bg-white"], 
-      [class*="bg-gray-50"], 
-      [class*="bg-zinc-50"],
-      [class*="bg-slate-50"],
-      .card {
-        background-color: rgba(255, 255, 255, 0.65) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
-        border-radius: 24px !important; /* 经典的苹果大圆角 */
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
-        transition: all 0.3s ease !important;
-      }
-
-      /* 3. 鼠标悬停交互 */
-      /* 针对卡片（通常是 a 标签或 div） */
-      a[class*="bg-white"]:hover,
-      div[class*="bg-white"]:hover {
-        transform: translateY(-4px) scale(1.01) !important;
-        background-color: rgba(255, 255, 255, 0.85) !important;
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12) !important;
-        z-index: 50;
-      }
-
-      /* 4. 图片圆角 */
-      img {
-        border-radius: 14px !important;
-      }
-
-      /* 5. 侧边栏/菜单栏特殊处理 (让它更透一点) */
-      aside, nav {
-        background-color: rgba(255, 255, 255, 0.5) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
-      }
-
-      /* 6. 暗黑模式适配 */
-      @media (prefers-color-scheme: dark) {
-        [class*="bg-white"], [class*="bg-gray-"], aside, nav {
-          background-color: rgba(30, 30, 30, 0.6) !important;
-          border-color: rgba(255,255,255,0.1) !important;
-          color: #fff !important;
-        }
-        [class*="bg-white"]:hover {
-          background-color: rgba(50, 50, 50, 0.8) !important;
-        }
-        /* 强制文字颜色 */
-        h1, h2, h3, span, p, a { color: #fff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1976d2" />
+    <meta name="description" content="个人导航站，整理和分享您喜爱的网站链接" />
+    <link rel="icon" href="/vite.svg" />
+    <title>导航站</title>
   </head>
   <body>
     <div id="root"></div>
-    
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- 🔥 核心脚本：保留这个清洁工，它是美化生效的关键 🔥 -->
-    <script>
-      // 定时清理 React 生成的灰色背景
-      const cleaner = setInterval(() => {
-        const masks = document.querySelectorAll('.min-h-screen, .bg-gray-50, .bg-zinc-50, body > div:first-child, main');
-        
-        masks.forEach(el => {
-          const style = window.getComputedStyle(el);
-          // 如果背景不是透明的，强制变透明，让壁纸透出来
-          if (style.backgroundColor !== 'rgba(0, 0, 0, 0)' && style.backgroundColor !== 'transparent') {
-            el.style.setProperty('background-color', 'transparent', 'important');
-            el.style.setProperty('background-image', 'none', 'important');
-            el.style.setProperty('box-shadow', 'none', 'important');
-          }
-        });
-      }, 200);
-    </script>
   </body>
 </html>
